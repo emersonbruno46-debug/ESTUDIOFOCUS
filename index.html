@@ -749,6 +749,96 @@
       font-weight: 600;
     }
 
+    /* FIRST TIME REGISTRATION MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 10, 15, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-logo {
+      margin-bottom: 24px;
+    }
+    
+    .modal-logo img {
+      height: 38px;
+    }
+
+    .modal-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal-card p {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 24px;
+    }
+
+    /* USER PROFILE BADGE */
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: rgba(0, 136, 255, 0.03);
+      border: 1px solid rgba(0, 136, 255, 0.15);
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+    }
+
+    .user-profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .user-profile-info strong {
+      font-size: 0.95rem;
+      color: white;
+    }
+
+    .user-profile-info span {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+    }
+
+    .change-data-btn {
+      background: none;
+      border: none;
+      color: var(--color-brand);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color var(--transition-fast);
+    }
+
+    .change-data-btn:hover {
+      color: white;
+    }
+
     /* MOBILE RESPONSIVENESS OVERRIDES */
     @media (max-width: 600px) {
       .container {
@@ -884,6 +974,29 @@
 </head>
 <body>
 
+  <!-- FIRST TIME REGISTRATION MODAL -->
+  <div id="firstTimeModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-logo">
+        <img src="focus branca.svg" alt="FOCUS Logo">
+      </div>
+      <h2>Seja bem-vindo(a)!</h2>
+      <p>Insira seus dados abaixo apenas uma vez para facilitar seus agendamentos semanais na FOCUS.</p>
+      
+      <form id="firstTimeForm" onsubmit="saveFirstTimeData(event)">
+        <div class="form-group" style="text-align: left;">
+          <label for="regName">Nome Completo</label>
+          <input type="text" id="regName" class="form-input" placeholder="Digite seu nome completo" required>
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 24px;">
+          <label for="regPhone">WhatsApp (com DDD)</label>
+          <input type="tel" id="regPhone" class="form-input" placeholder="(00) 00000-0000" required>
+        </div>
+        <button type="submit" class="submit-btn" style="margin-top: 0;">Começar a Treinar</button>
+      </form>
+    </div>
+  </div>
+
   <!-- HEADER -->
   <header>
     <div class="container header-container">
@@ -942,13 +1055,25 @@
             <span>3</span> Informe seus Dados
           </div>
           <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
-            <div class="form-group">
-              <label for="clientName">Nome Completo</label>
-              <input type="text" id="clientName" class="form-input" placeholder="Digite seu nome completo" required>
+            <!-- User Profile card for return visitors -->
+            <div class="user-profile-badge" id="userProfileBadge" style="display: none;">
+              <div class="user-profile-info">
+                <strong id="displayClientName"></strong>
+                <span id="displayClientPhone"></span>
+              </div>
+              <button type="button" class="change-data-btn" onclick="enableDataEdit()">Alterar Dados</button>
             </div>
-            <div class="form-group">
-              <label for="clientPhone">WhatsApp (com DDD)</label>
-              <input type="tel" id="clientPhone" class="form-input" placeholder="(00) 00000-0000" required>
+
+            <!-- Input fields (hidden if profile loaded) -->
+            <div id="formFieldsContainer">
+              <div class="form-group">
+                <label for="clientName">Nome Completo</label>
+                <input type="text" id="clientName" class="form-input" placeholder="Digite seu nome completo" required>
+              </div>
+              <div class="form-group">
+                <label for="clientPhone">WhatsApp (com DDD)</label>
+                <input type="tel" id="clientPhone" class="form-input" placeholder="(00) 00000-0000" required>
+              </div>
             </div>
             
             <button type="submit" class="submit-btn">
@@ -1091,9 +1216,15 @@
       selectDay(0); // Select today by default
       renderMyBookings();
       loadCachedUserData();
+      checkFirstTimeUser();
       
-      // Setup mask for phone input
-      const phoneInput = document.getElementById('clientPhone');
+      // Setup masks for phone inputs
+      setupPhoneMask(document.getElementById('clientPhone'));
+      setupPhoneMask(document.getElementById('regPhone'));
+    });
+
+    function setupPhoneMask(phoneInput) {
+      if (!phoneInput) return;
       phoneInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 11) value = value.slice(0, 11);
@@ -1110,7 +1241,7 @@
         }
         e.target.value = formatted;
       });
-    });
+    }
 
     // GENERATE NEXT 7 DAYS
     function generateDates() {
@@ -1272,13 +1403,68 @@
       }
     }
 
+    // CHECK IF FIRST TIME USER
+    function checkFirstTimeUser() {
+      const savedName = localStorage.getItem('focus_client_name');
+      const savedPhone = localStorage.getItem('focus_client_phone');
+      
+      if (!savedName || !savedPhone) {
+        document.getElementById('firstTimeModal').style.display = 'flex';
+      }
+    }
+
+    // SAVE FIRST TIME DATA
+    function saveFirstTimeData(event) {
+      event.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      
+      if (name.length < 3) {
+        showToast("Por favor, insira o seu nome completo.", "error");
+        return;
+      }
+      
+      if (phone.replace(/\D/g, '').length < 10) {
+        showToast("Por favor, insira um número de WhatsApp válido.", "error");
+        return;
+      }
+      
+      localStorage.setItem('focus_client_name', name);
+      localStorage.setItem('focus_client_phone', phone);
+      
+      document.getElementById('firstTimeModal').style.display = 'none';
+      loadCachedUserData();
+      showToast("Dados salvos com sucesso!", "success");
+    }
+
     // CACHED USER DATA
     function loadCachedUserData() {
       const savedName = localStorage.getItem('focus_client_name');
       const savedPhone = localStorage.getItem('focus_client_phone');
       
-      if (savedName) document.getElementById('clientName').value = savedName;
-      if (savedPhone) document.getElementById('clientPhone').value = savedPhone;
+      if (savedName && savedPhone) {
+        // Display profile badge
+        document.getElementById('displayClientName').innerText = savedName;
+        document.getElementById('displayClientPhone').innerText = savedPhone;
+        document.getElementById('userProfileBadge').style.display = 'flex';
+        
+        // Hide inputs
+        document.getElementById('formFieldsContainer').style.display = 'none';
+        
+        // Populate inputs in background
+        document.getElementById('clientName').value = savedName;
+        document.getElementById('clientPhone').value = savedPhone;
+      } else {
+        document.getElementById('userProfileBadge').style.display = 'none';
+        document.getElementById('formFieldsContainer').style.display = 'block';
+      }
+    }
+
+    // ENABLE DATA EDIT
+    function enableDataEdit() {
+      document.getElementById('userProfileBadge').style.display = 'none';
+      document.getElementById('formFieldsContainer').style.display = 'block';
+      document.getElementById('clientName').focus();
     }
 
     // STORAGE HANDLERS
@@ -1505,6 +1691,9 @@ Aguardo a confirmação do acesso na academia!`;
       
       // Redirect to WhatsApp directly (bypasses popup blockers on iOS Safari/Android Chrome)
       window.location.href = whatsappUrl;
+      
+      // Reload displays
+      loadCachedUserData();
       
       showToast("Agendamento registrado! Abrindo WhatsApp...", "success");
     }

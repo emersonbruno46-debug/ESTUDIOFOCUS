@@ -19,6 +19,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     /* VARIABLES & DESIGN SYSTEM */
@@ -743,6 +746,100 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
+
+    /* MOBILE RESPONSIVENESS OVERRIDES */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+      header {
+        background: rgba(7, 10, 15, 0.9);
+      }
+      .header-container {
+        height: 64px;
+      }
+      .logo-container img {
+        height: 28px;
+      }
+      .nav-btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+      }
+      .hero {
+        padding-top: 100px;
+        padding-bottom: 30px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        margin-bottom: 24px;
+      }
+      .app-grid {
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      .booking-section {
+        padding: 20px 16px;
+      }
+      .section-title {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+      }
+      .time-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 8px;
+      }
+      .time-slot {
+        padding: 12px 8px;
+      }
+      .time-label {
+        font-size: 1.1rem;
+      }
+      .slot-status {
+        font-size: 0.7rem;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .submit-btn {
+        padding: 14px;
+        font-size: 0.95rem;
+      }
+      .sidebar {
+        gap: 20px;
+      }
+      .summary-card, .my-bookings {
+        padding: 20px 16px;
+      }
+      .summary-title, .bookings-title {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+      }
+      .summary-item {
+        padding: 10px 0;
+      }
+      .summary-label {
+        font-size: 0.8rem;
+      }
+      .summary-value {
+        font-size: 0.95rem;
+      }
+      .benefit-card {
+        padding: 20px 16px;
+      }
+      .benefit-card h3 {
+        font-size: 1.1rem;
+      }
+      .benefit-card p {
+        font-size: 0.85rem;
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -917,20 +1014,24 @@
   <!-- JAVASCRIPT CODE -->
   <script>
     // CONFIGURATION
-    const WHATSAPP_DESTINATION = "5538991699412"; // Maison's number
+    const WHATSAPP_DESTINATION = "5538991569681"; // Official Maison's number
+    
+    // SUPABASE CLIENT CONFIGURATION
+    const supabaseUrl = "https://ezckwqbtxgyrouonmfdt.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6Y2t3cWJ0eGd5cm91b25tZmR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODM1MjUsImV4cCI6MjA5NjU1OTUyNX0.CIMGe-mcllceYnx53CC5cRcwk3FxCB8rBXADcNn6M6c";
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
     
     // STATE
     let selectedDate = null;
     let selectedTime = null;
     let datesList = [];
     const availableSlots = [
+      "06:00 - 07:00",
       "07:00 - 08:00",
       "08:00 - 09:00",
       "09:00 - 10:00",
       "10:00 - 11:00",
       "11:00 - 12:00",
-      "12:00 - 13:00",
-      "13:00 - 14:00",
       "14:00 - 15:00",
       "15:00 - 16:00",
       "16:00 - 17:00",
@@ -1044,21 +1145,46 @@
     }
 
     // RENDER TIME SLOTS
-    function renderTimeGrid() {
+    async function renderTimeGrid() {
       const grid = document.getElementById('timeGrid');
+      grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-text-secondary); padding: 20px 0;">Carregando horários...</div>';
+      
+      let bookedCounts = {};
+      try {
+        const { data, error } = await supabaseClient
+          .from('focus_appointments')
+          .select('booking_time')
+          .eq('booking_date', selectedDate.fullDateStr);
+          
+        if (!error && data) {
+          data.forEach(item => {
+            bookedCounts[item.booking_time] = (bookedCounts[item.booking_time] || 0) + 1;
+          });
+        }
+      } catch (err) {
+        console.error("Erro ao obter dados do Supabase:", err);
+      }
+      
       grid.innerHTML = '';
       
-      // Check which times are already booked for this specific date in localStorage
-      const bookings = getBookingsFromStorage();
-      const bookedHours = bookings
+      // Check which times are already booked by THIS user in localStorage
+      const myBookings = getBookingsFromStorage();
+      const myBookedHours = myBookings
         .filter(b => b.dateStr === selectedDate.fullDateStr)
         .map(b => b.timeStr);
       
       availableSlots.forEach((slot) => {
-        const isBooked = bookedHours.includes(slot);
+        const count = bookedCounts[slot] || 0;
+        const isFullyBooked = count >= 7;
+        const isMyBooking = myBookedHours.includes(slot);
+        
+        // Sumir da tela se estiver lotado e não for do usuário
+        if (isFullyBooked && !isMyBooking) {
+          return;
+        }
         
         const slotEl = document.createElement('div');
-        slotEl.className = `time-slot ${isBooked ? 'booked' : ''}`;
+        slotEl.className = `time-slot ${isMyBooking ? 'booked' : ''}`;
         
         // If current slot matches selection
         if (selectedTime === slot) {
@@ -1066,19 +1192,25 @@
         }
         
         slotEl.onclick = () => {
-          if (!isBooked) selectTime(slot, slotEl);
+          if (!isMyBooking) selectTime(slot, slotEl);
         };
+        
+        const slotsLeft = 7 - count;
         
         slotEl.innerHTML = `
           <div class="time-label">${slot.split(' - ')[0]}h</div>
-          <div class="slot-status">
-            <span class="status-dot"></span>
-            ${isBooked ? 'Ocupado' : 'Disponível'}
+          <div class="slot-status" style="color: ${isMyBooking ? 'var(--color-success)' : 'var(--color-text-secondary)'}">
+            <span class="status-dot" style="background-color: ${isMyBooking ? 'var(--color-success)' : 'var(--color-brand)'}"></span>
+            ${isMyBooking ? 'Seu Horário' : `${slotsLeft} vagas`}
           </div>
         `;
         
         grid.appendChild(slotEl);
       });
+
+      if (grid.children.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--color-error); padding: 20px 0;">Todos os horários estão lotados para este dia.</div>';
+      }
     }
 
     // SELECT TIME
@@ -1175,16 +1307,41 @@
       });
     }
 
+    // DELETE BOOKING FROM SUPABASE
+    async function deleteBookingFromSupabase(booking) {
+      try {
+        const { error } = await supabaseClient
+          .from('focus_appointments')
+          .delete()
+          .eq('client_name', booking.name)
+          .eq('client_phone', booking.phone)
+          .eq('booking_date', booking.dateStr)
+          .eq('booking_time', booking.timeStr);
+        if (error) throw error;
+      } catch (err) {
+        console.error("Erro ao deletar do Supabase:", err);
+        throw err;
+      }
+    }
+
     // CANCEL BOOKING
     function cancelBooking(index) {
       if (confirm("Deseja realmente desmarcar este horário de treino?")) {
         const bookings = getBookingsFromStorage();
-        bookings.splice(index, 1);
-        localStorage.setItem('focus_bookings', JSON.stringify(bookings));
+        const b = bookings[index];
         
-        renderMyBookings();
-        renderTimeGrid();
-        showToast("Horário desmarcado com sucesso!", "success");
+        // Deletar do Supabase
+        deleteBookingFromSupabase(b).then(() => {
+          bookings.splice(index, 1);
+          localStorage.setItem('focus_bookings', JSON.stringify(bookings));
+          
+          renderMyBookings();
+          renderTimeGrid();
+          showToast("Horário desmarcado com sucesso!", "success");
+        }).catch(err => {
+          console.error("Erro ao cancelar no banco:", err);
+          showToast("Erro ao desmarcar no banco de dados.", "error");
+        });
       }
     }
 
@@ -1208,7 +1365,7 @@ Aguardo confirmação na academia!`;
     }
 
     // FORM SUBMISSION HANDLER
-    function handleBookingSubmit(event) {
+    async function handleBookingSubmit(event) {
       event.preventDefault();
       
       if (!selectedDate || !selectedTime) {
@@ -1226,6 +1383,41 @@ Aguardo confirmação na academia!`;
       
       if (phone.replace(/\D/g, '').length < 10) {
         showToast("Por favor, insira um número de WhatsApp válido.", "error");
+        return;
+      }
+
+      // Check capacity in real time before booking
+      try {
+        const { data, error } = await supabaseClient
+          .from('focus_appointments')
+          .select('id')
+          .eq('booking_date', selectedDate.fullDateStr)
+          .eq('booking_time', selectedTime);
+          
+        if (!error && data && data.length >= 7) {
+          showToast("Ops! Este horário acabou de lotar. Escolha outro.", "error");
+          renderTimeGrid();
+          return;
+        }
+      } catch (err) {
+        console.error("Erro ao verificar capacidade:", err);
+      }
+
+      // Insert into Supabase
+      try {
+        const { error } = await supabaseClient
+          .from('focus_appointments')
+          .insert({
+            client_name: name,
+            client_phone: phone,
+            booking_date: selectedDate.fullDateStr,
+            booking_time: selectedTime
+          });
+          
+        if (error) throw error;
+      } catch (err) {
+        console.error("Erro ao salvar no banco:", err);
+        showToast("Erro ao agendar no banco de dados. Tente novamente.", "error");
         return;
       }
 

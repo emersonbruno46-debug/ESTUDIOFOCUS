@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOCUS | Agendamento de Treino - Maison Vieira</title>
+  <meta name="description" content="Agende seu horário na FOCUS, a academia com foco em performance de Maison Vieira. Treine sem superlotação, marque de 1 em 1 hora.">
+  <meta name="keywords" content="academia focus, agendamento de treino, maison vieira, personal trainer, musculacao, treino agendado">
+  <meta name="author" content="Maison Vieira">
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FOCUS | Agendamento de Treino - Maison Vieira">
+  <meta property="og:description" content="Foque no seu treino, nós cuidamos do seu tempo. Agende seu horário de treino na FOCUS de forma simples e rápida.">
+  <meta property="og:image" content="focus branca.svg">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* VARIABLES & DESIGN SYSTEM */
+    :root {
+      --bg-dark: #070a0f;
+      --bg-card: rgba(13, 19, 26, 0.65);
+      --bg-card-hover: rgba(20, 29, 40, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-active: #0088ff;
+      --color-brand: #0088ff;
+      --color-brand-glow: rgba(0, 136, 255, 0.35);
+      --color-brand-dark: #0272c4;
+      --color-text-primary: #ffffff;
+      --color-text-secondary: #94a3b8;
+      --color-success: #10b981;
+      --color-error: #ef4444;
+      
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+    }
+
+    /* BASE STYLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
+      background-color: var(--bg-dark);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-brand);
+    }
+
+    /* GLOW BACKGROUND EFFECT */
+    .glow-bg {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0, 136, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .glow-bg-bottom {
+      position: absolute;
+      bottom: -10%;
+      left: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(2, 114, 196, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* LAYOUT UTILITIES */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* GLASS PANEL */
+    .glass-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition-normal), transform var(--transition-normal);
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(7, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-container {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-container img {
+      height: 42px;
+      display: block;
+      transition: transform var(--transition-normal);
+    }
+
+    .logo-container img:hover {
+      transform: scale(1.03);
+    }
+
+    .nav-btn {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text-primary);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      transition: all var(--transition-fast);
+    }
+
+    .nav-btn:hover {
+      background: var(--color-brand);
+      border-color: var(--color-brand);
+      box-shadow: 0 0 15px var(--color-brand-glow);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding-top: 160px;
+      padding-bottom: 60px;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(0, 136, 255, 0.1);
+      border: 1px solid rgba(0, 136, 255, 0.25);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-brand);
+      margin-bottom: 24px;
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 5px rgba(0, 136, 255, 0.1);
+      }
+      100% {
+        box-shadow: 0 0 15px rgba(0, 136, 255, 0.3);
+      }
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 40%, var(--color-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    /* APP CONTAINER */
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      margin-bottom: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 968px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SECTIONS TITLES */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title span {
+      background: var(--color-brand);
+      color: var(--bg-dark);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    /* STEP 1: DATE SELECTOR */
+    .booking-section {
+      padding: 32px;
+    }
+
+    .days-carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) var(--bg-dark);
+    }
+
+    .day-card {
+      flex: 0 0 calc(20% - 10px);
+      min-width: 85px;
+      padding: 16px 8px;
+      text-align: center;
+      cursor: pointer;
+      scroll-snap-align: start;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+    }
+
+    @media (max-width: 600px) {
+      .day-card {
+        flex: 0 0 calc(33.33% - 8px);
+      }
+    }
+
+    .day-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .day-card.active {
+      background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-dark) 100%);
+      border-color: var(--color-brand);
+      box-shadow: 0 8px 25px rgba(0, 136, 255, 0.3);
+    }
+
+    .day-card .weekday {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .day-card.active .weekday {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .day-card .daynum {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .day-card .month {
+      font-size: 0.7rem;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
+    .day-card.active .month {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* STEP 2: TIME GRID */
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .time-slot {
+      padding: 18px 10px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .time-slot:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
+    .time-slot.active {
+      border-color: var(--color-brand);
+      background: rgba(0, 136, 255, 0.06);
+      box-shadow: 0 0 15px rgba(0, 136, 255, 0.15);
+    }
+
+    .time-slot.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-brand);
+    }
+
+    .time-slot .time-label {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .time-slot .slot-status {
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--color-success);
+    }
+
+    .time-slot .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--color-success);
+    }
+
+    .time-slot.booked {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.2);
+      border-color: transparent;
+    }
+
+    .time-slot.booked .slot-status {
+      color: var(--color-text-secondary);
+    }
+
+    .time-slot.booked .status-dot {
+      background-color: var(--color-text-secondary);
+    }
+
+    /* STEP 3: FORM */
+    .booking-form {
+      margin-top: 32px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0 16px;
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: all var(--transition-fast);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-brand);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 0 15px rgba(0, 136, 255, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 56px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 8px 30px rgba(0, 136, 255, 0.35);
+      transition: all var(--transition-normal);
+      margin-top: 24px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 136, 255, 0.5);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* RIGHT COLUMN: SUMMARY & MY BOOKINGS */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .summary-card {
+      padding: 32px;
+    }
+
+    .summary-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+
+    .summary-item .label {
+      color: var(--color-text-secondary);
+    }
+
+    .summary-item .value {
+      font-weight: 700;
+    }
+
+    .summary-item .value.highlight {
+      color: var(--color-brand);
+    }
+
+    /* MY BOOKINGS CARD */
+    .my-bookings {
+      padding: 32px;
+    }
+
+    .bookings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px 0;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .booking-item {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all var(--transition-fast);
+      animation: slideIn 0.3s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .booking-item:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .booking-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .booking-date {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .booking-time {
+      font-size: 0.85rem;
+      color: var(--color-brand);
+      font-weight: 600;
+    }
+
+    .booking-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: color var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn.whatsapp:hover {
+      color: var(--color-success);
+    }
+
+    .action-btn.cancel:hover {
+      color: var(--color-error);
+    }
+
+    /* BENEFITS SECTION */
+    .benefits {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .benefits-title {
+      text-align: center;
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 48px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .benefit-card {
+      padding: 32px;
+      height: 100%;
+    }
+
+    .benefit-card:hover {
+      border-color: rgba(0, 136, 255, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .benefit-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 136, 255, 0.1);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-brand);
+      margin-bottom: 24px;
+    }
+
+    .benefit-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+    }
+
+    .benefit-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .benefit-card p {
+      color: var(--color-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      background: rgba(7, 10, 15, 0.9);
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-logo img {
+      height: 32px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    /* TOAST / NOTIFICATION */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: -320px;
+      width: 280px;
+      padding: 16px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      right: 24px;
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--color-success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--color-error);
+    }
+
+    .toast-message {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GLOW BACKGROUNDS -->
+  <div class="glow-bg"></div>
+  <div class="glow-bg-bottom"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <div class="logo-container">
+        <!-- Load local focus branca.svg logo -->
+        <img src="focus branca.svg" alt="FOCUS Logo">
+      </div>
+      <a href="#booking" class="nav-btn">Agendar Horário</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span style="width:6px;height:6px;border-radius:50%;background-color:var(--color-brand);display:inline-block;animation:pulseGlow 1s infinite alternate"></span>
+        Novo Sistema de Agendamentos
+      </div>
+      <h1>Foque no seu treino,<br><span class="text-gradient">nós cuidamos do seu tempo.</span></h1>
+      <p>Marque sua hora de treino na FOCUS para evitar filas, planejar seu dia com eficiência e treinar com o máximo de performance.</p>
+    </div>
+  </section>
+
+  <!-- BOOKING ENGINE SECTION -->
+  <main class="container" id="booking">
+    <div class="app-grid">
+      
+      <!-- LEFT COLUMN: SELECTOR & FORM -->
+      <section class="glass-panel booking-section">
+        
+        <!-- STEP 1: SELECT DATE -->
+        <div class="section-title">
+          <span>1</span> Selecione o Dia
+        </div>
+        <div class="days-carousel" id="daysCarousel">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- STEP 2: SELECT TIME -->
+        <div class="section-title" style="margin-top: 32px;">
+          <span>2</span> Escolha o Horário
+        </div>
+        <div class="time-grid" id="timeGrid">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- STEP 3: FILL DETAILS -->
+        <div class="booking-form">
+          <div class="section-title">
+            <span>3</span> Informe seus Dados
+          </div>
+          <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+            <div class="form-group">
+              <label for="clientName">Nome Completo</label>
+              <input type="text" id="clientName" class="form-input" placeholder="Digite seu nome completo" required>
+            </div>
+            <div class="form-group">
+              <label for="clientPhone">WhatsApp (com DDD)</label>
+              <input type="tel" id="clientPhone" class="form-input" placeholder="(00) 00000-0000" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+              Confirmar e Enviar Horário
+              <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: SIDEBAR SUMMARY & PERSISTENT MY BOOKINGS -->
+      <aside class="sidebar">
+        
+        <!-- RESUMO DA RESERVA -->
+        <section class="glass-panel summary-card">
+          <h2 class="summary-title">Resumo da Seleção</h2>
+          <div class="summary-item">
+            <span class="label">Academia</span>
+            <span class="value text-gradient" style="font-weight: 800;">Estúdio Focus</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Dia Selecionado</span>
+            <span id="summaryDay" class="value">Nenhum</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Horário Selecionado</span>
+            <span id="summaryTime" class="value">Nenhum</span>
+          </div>
+          <div class="summary-item" style="margin-top: 16px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
+            <span class="label">Valor do Acesso</span>
+            <span class="value highlight">Incluso na Mensalidade</span>
+          </div>
+        </section>
+
+        <!-- MEUS AGENDAMENTOS (PERSISTENTES) -->
+        <section class="glass-panel my-bookings">
+          <h2 class="summary-title" style="display:flex; justify-content:space-between; align-items:center;">
+            Meus Agendamentos
+            <span style="font-size:0.75rem; background:rgba(0,136,255,0.15); color:var(--color-brand); padding:2px 8px; border-radius:10px;" id="bookingsCount">0</span>
+          </h2>
+          <div class="bookings-list" id="bookingsList">
+            <!-- Dynamically populated from localStorage -->
+            <div class="empty-state">Nenhum treino agendado para esta semana.</div>
+          </div>
+        </section>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- BENEFITS / EXPLAINER SECTION -->
+  <section class="benefits">
+    <div class="container">
+      <h2 class="benefits-title">Por que agendar seu treino?</h2>
+      <div class="benefits-grid">
+        
+        <!-- Benefit 1 -->
+        <div class="glass-panel benefit-card">
+          <div class="benefit-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94-3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" /></svg>
+          </div>
+          <h3>Evite Superlotação</h3>
+          <p>Controlamos a capacidade máxima por hora para garantir que você treine de forma confortável e com acesso livre aos equipamentos.</p>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="glass-panel benefit-card">
+          <div class="benefit-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+          </div>
+          <h3>Foco e Eficiência</h3>
+          <p>Ao agendar, você cria um compromisso com sua rotina de treinos e aproveita melhor sua sessão de 1 hora sem distrações.</p>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="glass-panel benefit-card">
+          <div class="benefit-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" /></svg>
+          </div>
+          <h3>Treino com Mais Segurança</h3>
+          <p>Com menor circulação de pessoas na academia, Maison Vieira e sua equipe conseguem prestar maior suporte aos treinos de todos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-logo">
+        <img src="focus branca.svg" alt="FOCUS Logo">
+      </div>
+      <p>© 2026 FOCUS Gym - Todos os direitos reservados. Gestão Maison Vieira Personal.</p>
+      <p style="font-size:0.75rem; opacity:0.6;">Avenida Montes Claros, Rio Pardo de Minas - MG</p>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="toast">
+    <div id="toastMessage" class="toast-message">Notificação</div>
+  </div>
+
+  <!-- JAVASCRIPT CODE -->
+  <script>
+    // CONFIGURATION
+    const WHATSAPP_DESTINATION = "5538991699412"; // Maison's number
+    
+    // STATE
+    let selectedDate = null;
+    let selectedTime = null;
+    let datesList = [];
+    const availableSlots = [
+      "07:00 - 08:00",
+      "08:00 - 09:00",
+      "09:00 - 10:00",
+      "10:00 - 11:00",
+      "11:00 - 12:00",
+      "12:00 - 13:00",
+      "13:00 - 14:00",
+      "14:00 - 15:00",
+      "15:00 - 16:00",
+      "16:00 - 17:00",
+      "17:00 - 18:00",
+      "18:00 - 19:00"
+    ];
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      generateDates();
+      renderDays();
+      selectDay(0); // Select today by default
+      renderMyBookings();
+      loadCachedUserData();
+      
+      // Setup mask for phone input
+      const phoneInput = document.getElementById('clientPhone');
+      phoneInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        
+        let formatted = '';
+        if (value.length > 0) {
+          formatted = '(' + value.slice(0, 2);
+          if (value.length > 2) {
+            formatted += ') ' + value.slice(2, 7);
+            if (value.length > 7) {
+              formatted += '-' + value.slice(7);
+            }
+          }
+        }
+        e.target.value = formatted;
+      });
+    });
+
+    // GENERATE NEXT 7 DAYS
+    function generateDates() {
+      const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+      const monthsOfYear = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      ];
+      
+      const today = new Date();
+      
+      for (let i = 0; i < 7; i++) {
+        const nextDate = new Date();
+        nextDate.setDate(today.getDate() + i);
+        
+        // Skip Sundays (standard gym closure, but if gym opens we can remove it. Let's keep it customizable)
+        if (nextDate.getDay() === 0) {
+          // Adjust iteration count to still get 7 working days
+          today.setDate(today.getDate() + 1);
+          i--;
+          continue;
+        }
+
+        datesList.push({
+          dateObj: nextDate,
+          dayNum: nextDate.getDate(),
+          weekdayStr: daysOfWeek[nextDate.getDay()],
+          monthStr: monthsOfYear[nextDate.getMonth()].slice(0, 3),
+          fullDateStr: nextDate.toLocaleDateString('pt-BR'),
+          readableDate: `${daysOfWeek[nextDate.getDay()]}, ${nextDate.getDate()} de ${monthsOfYear[nextDate.getMonth()]}`
+        });
+      }
+    }
+
+    // RENDER DAYS CAROUSEL
+    function renderDays() {
+      const carousel = document.getElementById('daysCarousel');
+      carousel.innerHTML = '';
+      
+      datesList.forEach((dateItem, idx) => {
+        const card = document.createElement('div');
+        card.className = `day-card`;
+        card.id = `day-${idx}`;
+        card.onclick = () => selectDay(idx);
+        
+        card.innerHTML = `
+          <div class="weekday">${dateItem.weekdayStr}</div>
+          <div class="daynum">${dateItem.dayNum}</div>
+          <div class="month">${dateItem.monthStr}</div>
+        `;
+        
+        carousel.appendChild(card);
+      });
+    }
+
+    // SELECT DAY
+    function selectDay(idx) {
+      // Clear previous selection in CSS classes
+      document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
+      
+      const selectedCard = document.getElementById(`day-${idx}`);
+      if (selectedCard) {
+        selectedCard.classList.add('active');
+      }
+      
+      selectedDate = datesList[idx];
+      
+      // Update Summary
+      document.getElementById('summaryDay').innerText = selectedDate.readableDate;
+      
+      // Reset selected time slot when switching days
+      selectedTime = null;
+      document.getElementById('summaryTime').innerText = "Nenhum";
+      
+      // Rerender time grid for the selected day
+      renderTimeGrid();
+    }
+
+    // RENDER TIME SLOTS
+    function renderTimeGrid() {
+      const grid = document.getElementById('timeGrid');
+      grid.innerHTML = '';
+      
+      // Check which times are already booked for this specific date in localStorage
+      const bookings = getBookingsFromStorage();
+      const bookedHours = bookings
+        .filter(b => b.dateStr === selectedDate.fullDateStr)
+        .map(b => b.timeStr);
+      
+      availableSlots.forEach((slot) => {
+        const isBooked = bookedHours.includes(slot);
+        
+        const slotEl = document.createElement('div');
+        slotEl.className = `time-slot ${isBooked ? 'booked' : ''}`;
+        
+        // If current slot matches selection
+        if (selectedTime === slot) {
+          slotEl.classList.add('active');
+        }
+        
+        slotEl.onclick = () => {
+          if (!isBooked) selectTime(slot, slotEl);
+        };
+        
+        slotEl.innerHTML = `
+          <div class="time-label">${slot.split(' - ')[0]}h</div>
+          <div class="slot-status">
+            <span class="status-dot"></span>
+            ${isBooked ? 'Ocupado' : 'Disponível'}
+          </div>
+        `;
+        
+        grid.appendChild(slotEl);
+      });
+    }
+
+    // SELECT TIME
+    function selectTime(slot, element) {
+      document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('active'));
+      
+      if (selectedTime === slot) {
+        selectedTime = null;
+        document.getElementById('summaryTime').innerText = "Nenhum";
+      } else {
+        selectedTime = slot;
+        element.classList.add('active');
+        document.getElementById('summaryTime').innerText = slot;
+      }
+    }
+
+    // CACHED USER DATA
+    function loadCachedUserData() {
+      const savedName = localStorage.getItem('focus_client_name');
+      const savedPhone = localStorage.getItem('focus_client_phone');
+      
+      if (savedName) document.getElementById('clientName').value = savedName;
+      if (savedPhone) document.getElementById('clientPhone').value = savedPhone;
+    }
+
+    // STORAGE HANDLERS
+    function getBookingsFromStorage() {
+      const stored = localStorage.getItem('focus_bookings');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveBookingToStorage(booking) {
+      const bookings = getBookingsFromStorage();
+      bookings.push(booking);
+      localStorage.setItem('focus_bookings', JSON.stringify(bookings));
+    }
+
+    // RENDER MY BOOKINGS
+    function renderMyBookings() {
+      const listEl = document.getElementById('bookingsList');
+      const countEl = document.getElementById('bookingsCount');
+      const bookings = getBookingsFromStorage();
+      
+      // Filter out bookings that are older than today (optional, but good practice)
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      // Sort bookings chronologically
+      bookings.sort((a, b) => {
+        const [dayA, monthA, yearA] = a.dateStr.split('/').map(Number);
+        const [dayB, monthB, yearB] = b.dateStr.split('/').map(Number);
+        const dateA = new Date(yearA, monthA - 1, dayA);
+        const dateB = new Date(yearB, monthB - 1, dayB);
+        if (dateA.getTime() !== dateB.getTime()) {
+          return dateA.getTime() - dateB.getTime();
+        }
+        return a.timeStr.localeCompare(b.timeStr);
+      });
+      
+      countEl.innerText = bookings.length;
+      
+      if (bookings.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">Nenhum treino agendado para esta semana.</div>';
+        return;
+      }
+      
+      listEl.innerHTML = '';
+      bookings.forEach((booking, index) => {
+        const item = document.createElement('div');
+        item.className = 'booking-item';
+        
+        // Extract day and month for preview
+        const dateParts = booking.dateStr.split('/');
+        const previewDate = `${dateParts[0]}/${dateParts[1]}`;
+        
+        item.innerHTML = `
+          <div class="booking-info">
+            <div class="booking-date">Treino FOCUS (${previewDate})</div>
+            <div class="booking-time">${booking.timeStr}</div>
+          </div>
+          <div class="booking-actions">
+            <!-- Resend WhatsApp message -->
+            <button class="action-btn whatsapp" onclick="resendBookingWhatsApp(${index})" title="Reenviar Confirmação">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </button>
+            <!-- Cancel booking -->
+            <button class="action-btn cancel" onclick="cancelBooking(${index})" title="Desmarcar Horário">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        `;
+        
+        listEl.appendChild(item);
+      });
+    }
+
+    // CANCEL BOOKING
+    function cancelBooking(index) {
+      if (confirm("Deseja realmente desmarcar este horário de treino?")) {
+        const bookings = getBookingsFromStorage();
+        bookings.splice(index, 1);
+        localStorage.setItem('focus_bookings', JSON.stringify(bookings));
+        
+        renderMyBookings();
+        renderTimeGrid();
+        showToast("Horário desmarcado com sucesso!", "success");
+      }
+    }
+
+    // RESEND WHATSAPP CONFIRMATION
+    function resendBookingWhatsApp(index) {
+      const bookings = getBookingsFromStorage();
+      const b = bookings[index];
+      
+      const text = `Olá Maison! Estou confirmando meu horário de treino agendado na FOCUS.
+      
+📋 CONFIRMAÇÃO DO TREINO:
+👤 Nome: ${b.name}
+📱 WhatsApp: ${b.phone}
+📅 Data: ${b.readableDate}
+⏰ Horário: ${b.timeStr}
+
+Aguardo confirmação na academia!`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINATION}&text=${encodeURIComponent(text)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // FORM SUBMISSION HANDLER
+    function handleBookingSubmit(event) {
+      event.preventDefault();
+      
+      if (!selectedDate || !selectedTime) {
+        showToast("Por favor, escolha uma data e um horário de treino!", "error");
+        return;
+      }
+      
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      
+      if (name.length < 3) {
+        showToast("Por favor, insira o seu nome completo.", "error");
+        return;
+      }
+      
+      if (phone.replace(/\D/g, '').length < 10) {
+        showToast("Por favor, insira um número de WhatsApp válido.", "error");
+        return;
+      }
+
+      // 1. Save client details for future bookings
+      localStorage.setItem('focus_client_name', name);
+      localStorage.setItem('focus_client_phone', phone);
+      
+      // 2. Create booking payload
+      const booking = {
+        name,
+        phone,
+        dateStr: selectedDate.fullDateStr,
+        readableDate: selectedDate.readableDate,
+        timeStr: selectedTime
+      };
+      
+      // 3. Save to localStorage
+      saveBookingToStorage(booking);
+      
+      // 4. Update UI
+      renderMyBookings();
+      renderTimeGrid();
+      
+      // 5. Open WhatsApp with formatted text
+      const text = `Olá Maison! Gostaria de agendar meu horário de treino na FOCUS.
+
+📋 DETALHES DO TREINO:
+👤 Nome: ${name}
+📱 WhatsApp: ${phone}
+📅 Data: ${selectedDate.readableDate}
+⏰ Horário: ${selectedTime}
+
+Por favor, confirme se o horário está disponível!`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINATION}&text=${encodeURIComponent(text)}`;
+      
+      // Reset form slot selection
+      selectedTime = null;
+      document.getElementById('summaryTime').innerText = "Nenhum";
+      
+      // Open WhatsApp tab
+      window.open(whatsappUrl, '_blank');
+      
+      showToast("Agendamento registrado! Enviando WhatsApp...", "success");
+    }
+
+    // TOAST NOTIFICATIONS
+    function showToast(message, type = "success") {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      
+      toast.className = `toast ${type} show`;
+      toastMsg.innerText = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

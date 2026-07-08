@@ -1487,15 +1487,15 @@ Aguardo confirmação na academia!`;
       renderTimeGrid();
       
       // 5. Open WhatsApp with formatted text
-      const text = `Olá Maison! Gostaria de agendar meu horário de treino na FOCUS.
+      const text = `Olá Maison! Confirmo meu horário de treino agendado na FOCUS pelo site.
 
-📋 DETALHES DO TREINO:
+📋 DETALHES DO AGENDAMENTO:
 👤 Nome: ${name}
 📱 WhatsApp: ${phone}
 📅 Data: ${selectedDate.readableDate}
 ⏰ Horário: ${selectedTime}
 
-Por favor, confirme se o horário está disponível!`;
+Aguardo a confirmação do acesso na academia!`;
 
       const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINATION}&text=${encodeURIComponent(text)}`;
       
@@ -1503,10 +1503,10 @@ Por favor, confirme se o horário está disponível!`;
       selectedTime = null;
       document.getElementById('summaryTime').innerText = "Nenhum";
       
-      // Open WhatsApp tab
-      window.open(whatsappUrl, '_blank');
+      // Redirect to WhatsApp directly (bypasses popup blockers on iOS Safari/Android Chrome)
+      window.location.href = whatsappUrl;
       
-      showToast("Agendamento registrado! Enviando WhatsApp...", "success");
+      showToast("Agendamento registrado! Abrindo WhatsApp...", "success");
     }
 
     // TOAST NOTIFICATIONS

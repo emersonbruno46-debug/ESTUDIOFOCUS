@@ -782,6 +782,7 @@
         margin-bottom: 20px;
       }
       .app-grid {
+        grid-template-columns: 1fr;
         gap: 16px;
         margin-bottom: 32px;
       }
@@ -1452,7 +1453,7 @@ Aguardo confirmação na academia!`;
         if (error) throw error;
       } catch (err) {
         console.error("Erro ao salvar no banco:", err);
-        showToast("Erro ao agendar no banco de dados. Tente novamente.", "error");
+        showToast("Erro ao agendar: " + (err.message || JSON.stringify(err)), "error");
         return;
       }
 

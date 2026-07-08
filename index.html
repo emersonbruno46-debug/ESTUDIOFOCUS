@@ -1405,7 +1405,7 @@
 
 Aguardo confirmação na academia!`;
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINATION}&text=${encodeURIComponent(text)}`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_DESTINATION}?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, '_blank');
     }
 
@@ -1497,7 +1497,7 @@ Aguardo confirmação na academia!`;
 
 Aguardo a confirmação do acesso na academia!`;
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_DESTINATION}&text=${encodeURIComponent(text)}`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_DESTINATION}?text=${encodeURIComponent(text)}`;
       
       // Reset form slot selection
       selectedTime = null;

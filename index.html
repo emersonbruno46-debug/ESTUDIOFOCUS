@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FOCUS | Agendamento de Treino - Maison Vieira</title>
   <meta name="description" content="Agende seu horário na FOCUS, a academia com foco em performance de Maison Vieira. Treine sem superlotação, marque de 1 em 1 hora.">
   <meta name="keywords" content="academia focus, agendamento de treino, maison vieira, personal trainer, musculacao, treino agendado">
@@ -880,10 +880,6 @@
 </head>
 <body>
 
-  <!-- GLOW BACKGROUNDS -->
-  <div class="glow-bg"></div>
-  <div class="glow-bg-bottom"></div>
-
   <!-- HEADER -->
   <header>
     <div class="container header-container">
@@ -895,7 +891,13 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- Wrapping page contents to prevent horizontal overflow on iOS and restrict absolute glows -->
+  <div class="page-wrapper" style="overflow: hidden; width: 100%; position: relative; min-height: 100vh;">
+    <!-- GLOW BACKGROUNDS -->
+    <div class="glow-bg"></div>
+    <div class="glow-bg-bottom"></div>
+
+    <!-- HERO SECTION -->
   <section class="hero">
     <div class="container">
       <div class="hero-tag">
@@ -1039,8 +1041,11 @@
       </div>
       <p>© 2026 FOCUS Gym - Todos os direitos reservados. Gestão Maison Vieira Personal.</p>
       <p style="font-size:0.75rem; opacity:0.6;">Avenida Montes Claros, Rio Pardo de Minas - MG</p>
+      <a href="https://maisonpersonal.vercel.app/login" style="font-size:0.7rem; color:var(--color-text-secondary); text-decoration:none; margin-top:8px; opacity:0.5; display:inline-block;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">Acesso Restrito</a>
     </div>
   </footer>
+
+  </div> <!-- End page-wrapper -->
 
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toast" class="toast">

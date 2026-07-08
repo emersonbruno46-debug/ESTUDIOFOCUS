@@ -233,7 +233,7 @@
     /* APP CONTAINER */
     .app-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
       gap: 32px;
       margin-bottom: 80px;
       align-items: start;
@@ -241,7 +241,7 @@
 
     @media (max-width: 968px) {
       .app-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
@@ -273,6 +273,7 @@
     /* STEP 1: DATE SELECTOR */
     .booking-section {
       padding: 32px;
+      min-width: 0;
     }
 
     .days-carousel {
@@ -507,6 +508,7 @@
       display: flex;
       flex-direction: column;
       gap: 32px;
+      min-width: 0;
     }
 
     .summary-card {
@@ -782,12 +784,13 @@
         margin-bottom: 20px;
       }
       .app-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 16px;
         margin-bottom: 32px;
       }
       .booking-section {
         padding: 16px 12px;
+        min-width: 0;
       }
       .section-title {
         font-size: 1.15rem;
@@ -833,6 +836,7 @@
       }
       .sidebar {
         gap: 16px;
+        min-width: 0;
       }
       .summary-card, .my-bookings {
         padding: 16px 12px;
@@ -1041,7 +1045,7 @@
       </div>
       <p>© 2026 FOCUS Gym - Todos os direitos reservados. Gestão Maison Vieira Personal.</p>
       <p style="font-size:0.75rem; opacity:0.6;">Avenida Montes Claros, Rio Pardo de Minas - MG</p>
-      <a href="https://maisonpersonal.vercel.app/login" style="font-size:0.7rem; color:var(--color-text-secondary); text-decoration:none; margin-top:8px; opacity:0.5; display:inline-block;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">Acesso Restrito</a>
+      <a href="admin.html" style="font-size:0.7rem; color:var(--color-text-secondary); text-decoration:none; margin-top:8px; opacity:0.5; display:inline-block;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">Acesso Restrito</a>
     </div>
   </footer>
 

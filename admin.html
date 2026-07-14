@@ -725,6 +725,139 @@
       "18:00 - 19:00"
     ];
 
+    const fixedClients = {
+      "06:00 - 07:00": [
+        { name: "Jucélia", days: [1, 2, 3, 4, 5], phone: "38 991033132" },
+        { name: "Fernanda", days: [1, 2, 3, 4, 5], phone: "38 991926236" },
+        { name: "Laressa", days: [1, 2, 3, 4, 5], phone: "38 991974958" },
+        { name: "Elza", days: [1, 2, 3, 5], phone: "38 991980029" },
+        { name: "Mauricio", days: [3, 5], phone: "38 992305253" },
+        { name: "Manabu", days: [2, 4, 5], phone: "38 991529269" },
+        { name: "Vitalina", days: [1, 2, 5], phone: "38 99312226" },
+        { name: "Joelma", days: [1, 2, 3, 4, 5], phone: "38 999597436" },
+        { name: "Dany", days: [1, 2, 3, 5], phone: "38 991154103" },
+        { name: "Adalton", days: [2, 4], phone: "38 991291910" },
+        { name: "Vinicius", days: [1, 3, 5], phone: "" }
+      ],
+      "07:00 - 08:00": [
+        { name: "Judite", days: [1, 3, 5], phone: "38 991317193" },
+        { name: "Du", days: [1, 3, 5], phone: "38 991020868" },
+        { name: "Marcim", days: [1, 3, 5], phone: "" },
+        { name: "Daiane", days: [1, 2, 4], phone: "" },
+        { name: "Luís", days: [2, 4, 5], phone: "" },
+        { name: "Josuenio", days: [2, 4, 5], phone: "" },
+        { name: "Ronan", days: [2, 4, 5], phone: "38 99978165" },
+        { name: "Mônica", days: [3, 5], phone: "38 991039003" },
+        { name: "Diva", days: [1, 3, 5], phone: "" },
+        { name: "Rayanne", days: [1, 3, 5], phone: "38 991603242" },
+        { name: "Jeffersson", days: [2, 4, 5], phone: "" },
+        { name: "Jady", days: [2, 3, 4, 5], phone: "" }
+      ],
+      "08:00 - 09:00": [
+        { name: "Ester", days: [2, 4, 5], phone: "38 99910759" },
+        { name: "Evandro", days: [2, 4, 5], phone: "" },
+        { name: "Dário", days: [1, 3, 5], phone: "" },
+        { name: "Rosana", days: [1, 2, 3, 5], phone: "38 991029561" },
+        { name: "Luzlene", days: [2, 4, 5], phone: "38 999700744" },
+        { name: "Tiago", days: [2, 4, 5], phone: "38 991618195" },
+        { name: "Sonia", days: [2, 4, 5], phone: "" },
+        { name: "Eliene", days: [2, 4], phone: "38 991005054" }
+      ],
+      "09:00 - 10:00": [
+        { name: "Karol", days: [1, 2, 3, 4, 5], phone: "38 991999390" },
+        { name: "Nice", days: [1, 3, 5], phone: "38 998550399" },
+        { name: "Kelly", days: [2, 4, 5], phone: "38 991430989" },
+        { name: "Lane", days: [1, 2, 3, 4, 5], phone: "" },
+        { name: "Júlia", days: [2, 4], phone: "" },
+        { name: "Mença", days: [1], phone: "" },
+        { name: "Geraldo", days: [1], phone: "" },
+        { name: "Ailton", days: [1, 3, 5], phone: "" }
+      ],
+      "10:00 - 11:00": [
+        { name: "Judite", days: [2, 4, 5], phone: "38 991923123" },
+        { name: "Maico", days: [1, 2, 3, 5], phone: "38 991324337" },
+        { name: "Yara", days: [1, 2, 3, 5], phone: "38 991310496" },
+        { name: "Magda Rayrine", days: [2, 4], phone: "" },
+        { name: "Ana Paula", days: [1, 2, 3, 5], phone: "" }
+      ],
+      "11:00 - 12:00": [
+        { name: "Nayara", days: [1, 3, 5], phone: "38 997468512" },
+        { name: "Thalita", days: [1, 2, 3, 4], phone: "" },
+        { name: "Karen", days: [1, 2, 3, 4], phone: "38 991969716" },
+        { name: "Monica", days: [1], phone: "38 991039003" },
+        { name: "Leidy", days: [2, 5], phone: "" }
+      ],
+      "14:00 - 15:00": [
+        { name: "Ines", days: [1, 2, 3, 5], phone: "" },
+        { name: "Paulinho", days: [1, 3, 5], phone: "" },
+        { name: "Nice", days: [2, 4], phone: "" },
+        { name: "Ramone", days: [1, 2, 3, 4], phone: "" },
+        { name: "Ivone", days: [1, 2, 4], phone: "" },
+        { name: "Vitória", days: [2, 4, 5], phone: "" },
+        { name: "Tinha", days: [2, 4, 5], phone: "" },
+        { name: "Galego", days: [2, 4, 5], phone: "" },
+        { name: "Talles", days: [2, 4, 5], phone: "" },
+        { name: "Maria das Graças", days: [1], phone: "" }
+      ],
+      "15:00 - 16:00": [
+        { name: "Ryan", days: [1, 3, 5], phone: "" },
+        { name: "Claudineia", days: [1, 3, 5], phone: "" },
+        { name: "Sam", days: [1, 3, 5], phone: "" },
+        { name: "Gabriel", days: [2, 4, 5], phone: "" },
+        { name: "Ana", days: [1, 2, 3, 4, 5], phone: "" },
+        { name: "Magda Rayrinne", days: [1, 5], phone: "" },
+        { name: "Patrick", days: [1, 3, 5], phone: "" },
+        { name: "Luciano", days: [1, 3, 5], phone: "" },
+        { name: "Nice", days: [1], phone: "" },
+        { name: "Luana", days: [2, 4, 5], phone: "" }
+      ],
+      "16:00 - 17:00": [
+        { name: "Poliana", days: [1, 3, 5], phone: "" },
+        { name: "Rosana", days: [2, 4, 5], phone: "" },
+        { name: "Nelma", days: [2, 4, 5], phone: "" },
+        { name: "Adelhane", days: [1, 2, 4, 5], phone: "" },
+        { name: "Tonão", days: [4, 5], phone: "" },
+        { name: "Ismael", days: [2, 5], phone: "" },
+        { name: "Daniella", days: [2, 4, 5], phone: "" },
+        { name: "Joelina", days: [1, 3, 5], phone: "" },
+        { name: "Renata", days: [2, 4, 5], phone: "" },
+        { name: "Salete", days: [2, 4], phone: "" },
+        { name: "Raquel", days: [1, 2, 4], phone: "" },
+        { name: "Cicero", days: [2, 4, 5], phone: "" },
+        { name: "Vanilza", days: [1, 3, 5], phone: "" }
+      ],
+      "17:00 - 18:00": [
+        { name: "Dr. Orlando", days: [1, 3, 5], phone: "" },
+        { name: "Laerte", days: [1, 3, 5], phone: "" },
+        { name: "Claudionor", days: [1, 3, 5], phone: "" },
+        { name: "Josimar", days: [1, 2, 3, 4, 5], phone: "" },
+        { name: "Edilene", days: [1, 2], phone: "" },
+        { name: "Madgiel", days: [2, 4, 5], phone: "" },
+        { name: "Lavínia", days: [2, 4, 5], phone: "" },
+        { name: "Bruna", days: [2, 4, 5], phone: "" },
+        { name: "Simone", days: [2, 4], phone: "" },
+        { name: "Vanoer", days: [1, 3, 5], phone: "" },
+        { name: "Adilande", days: [1, 4, 5], phone: "" },
+        { name: "Nina", days: [1, 2, 4], phone: "" },
+        { name: "Neto", days: [1, 2, 3, 4, 5], phone: "" }
+      ],
+      "18:00 - 19:00": [
+        { name: "Luciana", days: [1, 2, 4], phone: "" },
+        { name: "Edmilson", days: [1, 2, 4], phone: "" },
+        { name: "Fabio", days: [1, 2, 4], phone: "" },
+        { name: "Gabriel", days: [1, 3], phone: "" },
+        { name: "Janaina", days: [1, 3], phone: "" },
+        { name: "Michelle", days: [2, 3], phone: "" },
+        { name: "Jaqueline", days: [1, 3, 4], phone: "" },
+        { name: "Alessandro", days: [1, 2, 4], phone: "" },
+        { name: "Maricleia", days: [1, 2, 4], phone: "" },
+        { name: "Lena", days: [1, 4], phone: "" },
+        { name: "Jairo", days: [1, 3], phone: "" },
+        { name: "Edelviro", days: [1, 3, 4], phone: "" },
+        { name: "Maria das graças", days: [2, 4], phone: "" }
+      ]
+    };
+
     // STATE
     let allAppointments = [];
     let datesList = [];
@@ -833,11 +966,35 @@
 
     // STATS UPDATE
     function updateStats() {
-      document.getElementById('statTotal').innerText = allAppointments.length;
+      let totalDisplayCount = 0;
+      datesList.forEach(d => {
+        const weekdayIdx = d.dateObj.getDay();
+        let fixedTotalForDay = 0;
+        AVAILABLE_SLOTS.forEach(slot => {
+          const fixedForSlot = fixedClients[slot] || [];
+          fixedTotalForDay += fixedForSlot.filter(c => c.days.includes(weekdayIdx)).length;
+        });
+        const dbCount = allAppointments.filter(app => app.booking_date === d.fullDateStr).length;
+        totalDisplayCount += fixedTotalForDay + dbCount;
+      });
+      document.getElementById('statTotal').innerText = totalDisplayCount;
       
       // Calculate today's count
       const todayStr = new Date().toLocaleDateString('pt-BR');
-      const todayCount = allAppointments.filter(app => app.booking_date === todayStr).length;
+      const todayObj = datesList.find(d => d.fullDateStr === todayStr);
+      let todayCount = 0;
+      if (todayObj) {
+        const weekdayIdx = todayObj.dateObj.getDay();
+        let fixedTotalForToday = 0;
+        AVAILABLE_SLOTS.forEach(slot => {
+          const fixedForSlot = fixedClients[slot] || [];
+          fixedTotalForToday += fixedForSlot.filter(c => c.days.includes(weekdayIdx)).length;
+        });
+        const dbCount = allAppointments.filter(app => app.booking_date === todayStr).length;
+        todayCount = fixedTotalForToday + dbCount;
+      } else {
+        todayCount = allAppointments.filter(app => app.booking_date === todayStr).length;
+      }
       document.getElementById('statToday').innerText = todayCount;
     }
 
@@ -883,8 +1040,14 @@
       datesList.forEach(d => {
         const badge = document.getElementById(`dayBadge-${d.fullDateStr}`);
         if (badge) {
-          const count = allAppointments.filter(app => app.booking_date === d.fullDateStr).length;
-          badge.innerText = `${count} agend.`;
+          const weekdayIdx = d.dateObj.getDay();
+          let fixedTotalForDay = 0;
+          AVAILABLE_SLOTS.forEach(slot => {
+            const fixedForSlot = fixedClients[slot] || [];
+            fixedTotalForDay += fixedForSlot.filter(c => c.days.includes(weekdayIdx)).length;
+          });
+          const dbCount = allAppointments.filter(app => app.booking_date === d.fullDateStr).length;
+          badge.innerText = `${fixedTotalForDay + dbCount} agend.`;
         }
       });
 
@@ -893,10 +1056,17 @@
       grid.innerHTML = "";
 
       const dayApps = allAppointments.filter(app => app.booking_date === selectedDateStr);
+      const currentDayObj = datesList.find(d => d.fullDateStr === selectedDateStr);
+      const weekdayIdx = currentDayObj ? currentDayObj.dateObj.getDay() : new Date().getDay();
 
       AVAILABLE_SLOTS.forEach(slot => {
         const slotApps = dayApps.filter(app => app.booking_time === slot);
-        const occupancy = slotApps.length;
+        
+        // Fixed clients for this slot on this weekday
+        const fixedForSlot = fixedClients[slot] || [];
+        const fixedOnThisDay = fixedForSlot.filter(c => c.days.includes(weekdayIdx));
+        
+        const occupancy = slotApps.length + fixedOnThisDay.length;
         const isFull = occupancy >= 7;
 
         let statusClass = "occupancy-free";
@@ -922,6 +1092,48 @@
         if (occupancy === 0) {
           studentsHtml = `<div class="empty-students">Nenhum aluno agendado</div>`;
         } else {
+          // Render fixed clients first
+          fixedOnThisDay.forEach(client => {
+            const rawPhone = client.phone.replace(/\D/g, "");
+            const formattedPhone = rawPhone.startsWith("55") ? rawPhone : (rawPhone ? `55${rawPhone}` : "");
+            
+            let waBtnHtml = "";
+            if (formattedPhone) {
+              const waText = `Olá ${client.name}! Estou entrando em contato sobre o seu treino na FOCUS no horário de ${slot}.`;
+              const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(waText)}`;
+              waBtnHtml = `
+                <a href="${waUrl}" target="_blank" class="action-btn whatsapp" title="Enviar WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </a>
+              `;
+            }
+            
+            // Format phone for display
+            let displayPhone = client.phone;
+            if (rawPhone.length === 11) {
+              displayPhone = `(${rawPhone.slice(0, 2)}) ${rawPhone.slice(2, 7)}-${rawPhone.slice(7)}`;
+            } else if (rawPhone.length === 10) {
+              displayPhone = `(${rawPhone.slice(0, 2)}) ${rawPhone.slice(2, 6)}-${rawPhone.slice(6)}`;
+            } else if (!client.phone) {
+              displayPhone = "Sem telefone";
+            }
+
+            studentsHtml += `
+              <div class="student-item" style="border-left: 3px solid var(--color-brand)">
+                <div class="student-info">
+                  <div class="student-name" title="${client.name} (Fixo)">
+                    ${client.name} <span style="font-size: 0.65rem; background: rgba(0, 136, 255, 0.15); color: var(--color-brand); padding: 1px 6px; border-radius: 4px; margin-left: 6px; font-weight: 800;">FIXO</span>
+                  </div>
+                  <div class="student-phone">${displayPhone}</div>
+                </div>
+                <div class="student-actions">
+                  ${waBtnHtml}
+                </div>
+              </div>
+            `;
+          });
+
+          // Render database clients next
           slotApps.forEach(app => {
             const rawPhone = app.client_phone.replace(/\D/g, "");
             const formattedPhone = rawPhone.startsWith("55") ? rawPhone : `55${rawPhone}`;
@@ -958,7 +1170,7 @@
 
           <div class="capacity-container">
             <div class="capacity-bar-bg">
-              <div class="capacity-bar" style="width: ${(occupancy / 7) * 100}%; background-color: ${barColor};"></div>
+              <div class="capacity-bar" style="width: ${Math.min(100, (occupancy / 7) * 100)}%; background-color: ${barColor};"></div>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--color-text-secondary); margin-top:6px;">
               <span>Ocupação</span>
